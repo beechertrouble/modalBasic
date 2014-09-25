@@ -1,0 +1,17 @@
+{
+	"name": "modalBasic",
+	"version": "0.0.0",
+	"homepage": "https://github.com/beechertrouble/modalBasic",
+	"authors": [
+		"Beecher <beechbot@gmail.com>"
+	],
+	"ignore": [
+		"node_modules",
+		"Gruntfile.js",
+		"package.json",
+		".project"
+	],
+	"main": "modalBasic.min.js",
+	"license": "MIT",
+	"private": false
+}
