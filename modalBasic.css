@@ -53,8 +53,13 @@
   display: inline-block;
   height: 100%;
   vertical-align: middle;
-  margin-right: -0.25em;
+  margin-right: -0.075em;
   /* Adjusts for spacing */
+}
+@media only screen and (max-width: 568px) {
+  #_mb_uber #_mb_rel_wrap {
+    padding: 15px;
+  }
 }
 #_mb_uber #_mb_content_wrap {
   margin: 0;
@@ -77,6 +82,11 @@
   display: inline-block;
   vertical-align: middle;
   text-align: left;
+}
+@media only screen and (max-width: 568px) {
+  #_mb_uber #_mb_content_wrap {
+    width: 100%;
+  }
 }
 #_mb_uber #_mb_close {
   padding: 0;
@@ -104,6 +114,15 @@
 }
 #_mb_uber #_mb_close:hover {
   opacity: 1;
+}
+@media only screen and (max-width: 568px) {
+  #_mb_uber #_mb_close {
+    top: auto;
+    bottom: 100%;
+    left: auto;
+    right: 0;
+    margin: 0 -10px -10px 0;
+  }
 }
 #_mb_uber #_mb_header {
   margin: 0;
