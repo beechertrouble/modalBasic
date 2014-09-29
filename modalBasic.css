@@ -12,18 +12,22 @@
   box-sizing: content-box;
   position: fixed;
   top: 0px;
-  right: -115px;
+  right: 0px;
   bottom: 100%;
   left: 0px;
   min-width: 100%;
-  padding-right: 100px;
+  padding-right: 0px;
   background: rgba(0, 0, 0, 0.5);
   z-index: 20000;
   opacity: 0;
   transform: translate3d(0, 0, 0);
   transition: opacity 0.2s linear 0s, bottom 0s 0.2s;
   overflow: hidden;
-  overflow-y: scroll;
+  overflow-y: auto;
+  -ms-overflow-style: none;
+}
+#_mb_uber::-webkit-scrollbar {
+  display: none;
 }
 #_mb_uber._mb_show_me {
   opacity: 1;
@@ -53,12 +57,11 @@
   display: inline-block;
   height: 100%;
   vertical-align: middle;
-  margin-right: -0.075em;
-  /* Adjusts for spacing */
+  /*margin-right: -0.075em;  Adjusts for spacing */
 }
 @media only screen and (max-width: 568px) {
   #_mb_uber #_mb_rel_wrap {
-    padding: 15px;
+    padding: 0 15px;
   }
 }
 #_mb_uber #_mb_content_wrap {
@@ -121,7 +124,7 @@
     bottom: 100%;
     left: auto;
     right: 0;
-    margin: 0 -10px -10px 0;
+    margin: 0 -5px -5px 0;
   }
 }
 #_mb_uber #_mb_header {
