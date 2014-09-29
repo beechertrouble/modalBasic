@@ -270,7 +270,7 @@
 		doCallback('beforeBind');
 		
 		$(document.body)
-			.on('click', '#_mb_uber', function(e) {
+			.on('mouseup', '#_mb_uber', function(e) {
 				e.preventDefault();
 				e.stopPropagation();
 				_mb.hide();

@@ -187,5 +187,5 @@ _mb.init(args);
 	
 ## To Do
 - add translation to more places and make default text/arias more configurable
-- confirm button styles
+- revisit hiding scrollbars in firefox ... 
 
