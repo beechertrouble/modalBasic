@@ -1,19 +1,14 @@
 {
-	"name": "pickyImg",
-	"description": "pickyImg lazy loader and image version picker",
-	"homepage": "http://github.com/beechertrouble/pickyImg",
-	"version": "1.0.0",
-	"private": true,
-	"devDependencies": {
-		"grunt": "~0.4.1",
-		"grunt-contrib-copy": ">=0.4.0",
-		"grunt-contrib-concat": ">=0.1.3",
-		"grunt-contrib-cssmin": ">=0.6.1",
-		"grunt-contrib-watch": ">=0.5.3",
-		"grunt-contrib-uglify": ">=0.2.0",
-		"grunt-mxmlc": "0.5.1",
-		"connect": "~2.16.2",
-		"grunt-contrib-jshint": "~0.10.0",
-		"grunt-curl": "~1.5.1"
-	}
+  "name": "modalBasic",
+  "description": "A... Basic...Modal....",
+  "homepage": "http://github.com/beechertrouble/modalBasic",
+  "version": "1.0.1",
+  "private": true,
+  "devDependencies": {
+    "grunt": "^0.4.5",
+    "grunt-contrib-less": "^0.12.0",
+    "grunt-contrib-uglify": "^0.6.0",
+    "grunt-contrib-watch": "^0.6.1",
+    "grunt-focus": "^0.1.1"
+  }
 }
