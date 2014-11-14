@@ -92,7 +92,7 @@
 	//
 	_mb.show = function(args) {
 		
-		if(!_mb.state.inited) return;
+		if(!_mb.state.inited) _mb.init(args);
 		
 		lastFocus = document.activeElement;
 		lastFocus.blur();
