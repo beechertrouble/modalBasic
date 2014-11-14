@@ -34,30 +34,7 @@ We are using css for proper positioning (not javascript), transitions, and of co
 
 ### Javascript
 
-#### Methods
-The following methods are available to you after init : 
-
-- `_mb.show(args);`
-	- advanced args : 
-		
-		```javascript
-			var args = {
-					header: 'header content with <span>markup</span>',
-					body: 'body content with <span>markup</span>, if you're into that kinda thing ...',
-					footer: 'footer content without markup, but this can take markup too.',
-					addClass : 'the_class_you_want_to_add_to_the_wrap or_classes',
-					showFor : 5000 // number of milliseconds to show the modal for, before hiding it automatically
-				};
-		```
-	- most basic example : 
-	
-		```javascript
-			_mb.show({body : 'hello'});
-		```
-- `_mb.hide();` - you guessed it.
-	- this is also called by, hitting the ESC key, clicking close button, or anything outside the content wrap.
-
-#### Callbacks / Events
+#### Callbacks / Events / Init
 - There's a pile of callbacks that can be defined when you init the _mb. Most are passed :  a reference to the modal object, and some local vars for the main bits of markup.
 
 ```javascript
@@ -109,6 +86,32 @@ var args = {
 
 _mb.init(args);
 ```
+
+#### Methods
+The following methods are available to you after init.
+
+(note: or you can just call `show(args)` and the args will be passed to `init(args)`): 
+
+- `_mb.show(args);`
+	- advanced args : 
+		
+		```javascript
+			var args = {
+					header: 'header content with <span>markup</span>',
+					body: 'body content with <span>markup</span>, if you're into that kinda thing ...',
+					footer: 'footer content without markup, but this can take markup too.',
+					addClass : 'the_class_you_want_to_add_to_the_wrap or_classes',
+					showFor : 5000 // number of milliseconds to show the modal for, before hiding it automatically
+				};
+		```
+	- most basic example : 
+	
+		```javascript
+			_mb.show({body : 'hello'});
+		```
+- `_mb.hide();` - you guessed it.
+	- this is also called by, hitting the ESC key, clicking close button, or anything outside the content wrap.
+
 
 ### Confirm / Prompt
 - Based on the window.confirm method, but with greater styling and functional possibilities.
