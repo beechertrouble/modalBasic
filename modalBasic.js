@@ -6,7 +6,7 @@
 *
 *
 */
-(function($, W) {
+;(function($, W) {
 	
 	var _mb = {
 			args : {
@@ -31,33 +31,42 @@
 				markedup : false,
 				bound : false,
 				visible : false
-			}
+			},
+			appendTo : undefined
 		},
 		$wrap, $header, $body, $footer, $close,
-		lastFocus,
+		lastFocus, lastFocusInner, formValString,
 		hideClass = '_mb_hide_me',
 		showClass = '_mb_show_me',
-		doCallback, addMarkup, reset, buildConfirm, bind;
+		doCallback, addMarkup, reset, buildConfirm, focusOn, bind;
 			
 	
 	//
 	// the markup template ... let's expose this incase people want to override it
-	//
-	_mb.markup = '<div id="_mb_uber">'
-					+ '<div id="_mb_rel_wrap">'
-						+ '<div id="_mb_content_wrap">'
-							+ '<div id="_mb_header" class="' + hideClass + '"></div>'
-							+ '<div id="_mb_body"></div>'
-							+ '<div id="_mb_footer" class="' + hideClass + '"></div>'
-							+ '<button id="_mb_close" type="button" title="click to close" aria-label="close modal">x</button>' 
-						+ '</div>'
-					+ '</div>'
-				+ '</div>';
+	//				
+	_mb.markup = '<div id="_mb_uber">' + 
+				'<div id="_mb_fixed_wrap">' +
+					'<div id="_mb_rel_wrap">' + 
+						'<div id="_mb_content_wrap">' + 
+							'<div id="_mb_header" class="' + hideClass + '" tabindex="0"></div>' + 
+							'<div id="_mb_body" tabindex="0"></div>' + 
+							'<div id="_mb_footer" class="' + hideClass + '" tabindex="0"></div>' + 
+							'<button class="_mb_close _mb_internal_close" type="button" title="click to close" aria-label="close modal">close</button>' +
+							'<div class="_mb_closeconfirm_wrap"><div class="_mb_closeconfirm_inner" tabindex="0">' + 
+								'<p>Are you sure you want to close? <br/>You will lose any work you\'ve done in this modal.</p>' + 
+								'<button class="_mb_closeconfirm_narp" data-which="narp">Cancel Close</button>' + 
+								'<button class="_mb_closeconfirm_yarp" data-which="yarp">Confirm Close</button>' + 
+							'</div></div>' + 
+						'</div>' + 
+					'</div>' + 
+				'</div>' +
+				'<button class="_mb_close _mb_external_close" type="button" title="click to close" aria-label="close modal">close</button>' +
+			'</div>';
 				
-	_mb.confirmMarkup = '<div id="_mb_confirm_wrap">'
-							+ '<button id="_mb_confirm_narp" data-which="narp" type="button" aria-label="cancel">[narpText]</button>'
-							+ '<button id="_mb_confirm_yarp" data-which="yarp" type="button" aria-label="confirm">[yarpText]</button>'
-						+ '</div>';
+	_mb.confirmMarkup = '<div id="_mb_confirm_wrap">' + 
+							'<button id="_mb_confirm_narp" data-which="narp" type="button" aria-label="cancel">[narpText]</button>' + 
+							'<button id="_mb_confirm_yarp" data-which="yarp" type="button" aria-label="confirm">[yarpText]</button>' + 
+						'</div>';
 	
 	//
 	// some setup methods ...
@@ -67,9 +76,10 @@
 		//
 		// defaults
 		//
-		var args = args === undefined ? {} : args;
+		args = args === undefined ? {} : args;
 		_mb.args.addCSS = args.addCSS !== undefined ? args.addCSS : true;
 		_mb.args.addMarkup = args.addMarkup !== undefined ? args.addMarkup : true;
+		_mb.args.appendTo = args.appendTo !== undefined ?  args.appendTo : document.body;
 		if(args.callbacks !== undefined) {
 			for(var c in _mb.args.callbacks) {
 				_mb.args.callbacks[c] = args.callbacks[c] !== undefined ? args.callbacks[c] : undefined;
@@ -94,9 +104,6 @@
 		
 		if(!_mb.state.inited) _mb.init(args);
 		
-		lastFocus = document.activeElement;
-		lastFocus.blur();
-		
 		var addClass = '',
 			showFor = false,
 			confirm = false;
@@ -119,7 +126,7 @@
 					_mb.args.callbacks[c] = args.callbacks[c];
 				}
 			}
-			
+
 			if(args.confirm !== undefined)
 				buildConfirm(args.confirm);	
 
@@ -133,16 +140,18 @@
 		$wrap
 			.removeClass()
 			.addClass(showClass + ' ' + addClass);
-
-		$body.focus();
 		
-		if($footer.find('button').length > -1)
-			$footer.find('button:enabled:first').focus();
-
-		if($body.find('form').length > -1) // autofocus on first element in form ...
-			$body.find('form:not([type="hidden"]) :input:visible:enabled:first').focus();
+		focusOn();
+		
+		// keep people from losing data ...
+		if($body.find('form').length > 0) {
+			formValString = $body.find('form').serialize();
+			$wrap.addClass('_mb_confirm_before_close');
+		}
 		
 		_mb.state.visible = true;
+		
+		$("body").css({'overflow' : 'hidden'});
 		
 		doCallback('onShow');
 
@@ -151,30 +160,46 @@
 		 	setTimeout(function(){_mb.hide(); }, showFor);
 
 	}; // show()
-	_mb.hide = function() {
+	_mb.hide = function(force) {
+		
+		force = force === undefined ? false : force;
 		
 		if(!_mb.state.inited) return;
 		
-		doCallback('beforeHide');
-		doCallback('narp');
+		// confirm before closing if form value has changed ...		
+		if(!force && $wrap.hasClass('_mb_confirm_before_close') && formValString != $body.find('form').serialize()) {
+						
+			$wrap.addClass('_mb_closeconfirm');
+			focusOn('closeconfirm');
+			return;
 		
-		$wrap.removeClass(showClass);
+		} else {
 		
-		_mb.state.visible = false;
-		
-		lastFocus.focus();
-		
-		doCallback('onHide');
+			doCallback('beforeHide');
+			doCallback('narp');
+			
+			$wrap.removeClass(showClass);
+			
+			_mb.state.visible = false;
+			
+			if(lastFocus !== undefined)
+				lastFocus.focus();
+							
+			$("body").css({'overflow' : 'auto'});
+			
+			doCallback('onHide');
+			
+		}
 
 	}; // hide()
 	_mb.translate = function(ting, lang) {
 
-		if(ting === undefined || ting == '') return false;
+		if(ting === undefined || ting === '') return false;
 		
 		lang = lang !== undefined ? lang : _mb.state.lang;
 		
-		var original = ting
-			, translation = false;
+		var original = ting,
+			translation = false;
 
 		if(typeof ting != 'object') {
 			ting = JSON.stringify(ting);
@@ -186,7 +211,7 @@
 
 		// default to en because ...
 		if(!translation && _mb.state.lang != 'en')
-			translation = ting['en'] === undefined ?  false : ting['en'];
+			translation = ting.en === undefined ?  false : ting.en;
 
 		// still no? how about the original string ...
 		if(!translation && typeof original == 'string')
@@ -214,7 +239,7 @@
 		
 		doCallback('beforeMarkup');
 		
-		$(document.body).append(_mb.markup);
+		$(_mb.args.appendTo).append(_mb.markup);
 		
 		_mb.state.markedup = true;
 		
@@ -231,7 +256,7 @@
 		
 	}; // reset()
 	buildConfirm = function(confirm) {
-
+				
 		var defaults = { // leaving space for translation
 				yarp : {
 					'en' : 'confirm'
@@ -258,6 +283,34 @@
 		$footer.removeClass(hideClass);
 
 	}; // buildConfirm()
+	focusOn = function(which) {
+		
+		switch(which) {
+
+			case('closeconfirm'):
+				if(document.activeElement !== undefined) {
+					lastFocusInner = document.activeElement;
+					lastFocusInner.blur();
+				}
+				$wrap.find('._mb_closeconfirm_inner').focus();
+				break;
+			
+			default:
+				if(document.activeElement !== undefined && $(document.activeElement).parents('#_mb_uber').length <= 0) {
+					lastFocus = document.activeElement;
+					lastFocus.blur();
+				}
+				if($header.text().length > 0) {
+					$header.focus();
+				} else if($body.text().length > 0) {
+					$body.focus();
+				} else if($footer.text().length > 0) {
+					$footer.focus();
+				} 
+				break;
+		}
+		
+	}; // lastFocus()
 	bind = function() {
 		
 		// refs ...
@@ -265,7 +318,7 @@
 		$header = $("#_mb_header");
 		$body = $("#_mb_body");
 		$footer = $("#_mb_footer");
-		$close = $("#_mb_close");
+		$close = $("._mb_close");
 		
 		doCallback('beforeBind');
 		
@@ -275,10 +328,10 @@
 				e.stopPropagation();
 				_mb.hide();
 			})
-			.on('click', '#_mb_content_wrap', function(e) {
+			.on('click touchstart touchmove touchend', '#_mb_content_wrap', function(e) {
 				e.stopPropagation();
 			})
-			.on('click', '#_mb_close', function(e) {
+			.on('click', '._mb_close', function(e) {
 				e.preventDefault();
 				_mb.hide();
 			})
@@ -293,6 +346,15 @@
 					
 				_mb.hide();
 
+			})
+			.on('click', '._mb_closeconfirm_narp', function(e){
+				e.preventDefault();
+				$wrap.removeClass('_mb_closeconfirm');
+				focusOn();
+			})
+			.on('click', '._mb_closeconfirm_yarp', function(e){
+				e.preventDefault();
+				_mb.hide(true);
 			});
 		
 		$(W)

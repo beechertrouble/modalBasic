@@ -17,15 +17,23 @@ Trying to keep this one real bare bones and semantic - other things can extend i
 ### Markup
 The following markup is appeneded to the document.body onInit :
 ```html
-<div id="_mb_uber"> <!-- this provides the page overlay and fixed positioning -->
-	<div id="_mb_rel_wrap"> <!-- this is for veritcal centering with a :before element -->
-		<div id="_mb_content_wrap">
-			<div id="_mb_header"></div>
-			<div id="_mb_body"></div>
-			<div id="_mb_footer"></div>
-			<button id="_mb_close" type="button" title="click to close" aria-label="close modal">x</button>
+<div id="_mb_uber">
+	<div id="_mb_fixed_wrap">
+		<div id="_mb_rel_wrap">
+			<div id="_mb_content_wrap">
+				<div id="_mb_header" class="hideClass" tabindex="0"></div>
+				<div id="_mb_body" tabindex="0"></div>
+				<div id="_mb_footer" class="hideClass" tabindex="0"></div>
+				<button class="_mb_close _mb_internal_close" type="button" title="click to close" aria-label="close modal">close</button>
+				<div class="_mb_closeconfirm_wrap"><div class="_mb_closeconfirm_inner" tabindex="0">
+					<p>Are you sure you want to close? <br/>You will lose any work you\ve done in this modal.</p>
+					<button class="_mb_closeconfirm_narp" data-which="narp">Cancel Close</button>
+					<button class="_mb_closeconfirm_yarp" data-which="yarp">Confirm Close</button>
+				</div></div>
+			</div>
 		</div>
 	</div>
+	<button class="_mb_close _mb_external_close" type="button" title="click to close" aria-label="close modal">close</button>
 </div>
 ```
 
@@ -191,4 +199,5 @@ The following methods are available to you after init.
 ## To Do
 - add translation to more places and make default text/arias more configurable
 - revisit hiding scrollbars in firefox ... 
+- lower the specificity of the css ...
 
