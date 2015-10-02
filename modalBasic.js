@@ -6,7 +6,7 @@
 *
 *
 */
-;(function($, W) {
+;(function($, scope) {
 	
 	var _mb = {
 			args : {
@@ -47,7 +47,7 @@
 	_mb.markup = '<div id="_mb_uber">' + 
 				'<div id="_mb_fixed_wrap">' +
 					'<div id="_mb_rel_wrap">' + 
-						'<div id="_mb_content_wrap">' + 
+						'<div id="_mb_content_wrap" role="dialog" aria-labelledby="_mb_header" aria-describedby="_mb_body">' + 
 							'<div id="_mb_header" class="' + hideClass + '" tabindex="0"></div>' + 
 							'<div id="_mb_body" tabindex="0"></div>' + 
 							'<div id="_mb_footer" class="' + hideClass + '" tabindex="0"></div>' + 
@@ -357,7 +357,7 @@
 				_mb.hide(true);
 			});
 		
-		$(W)
+		$(window)
 			.on('keyup', function(e){
 
 				if(e.which == 27 && _mb.state.visible) _mb.hide();
@@ -370,9 +370,9 @@
 		
 	}; // bind()
 	
-	W._mb = _mb;
+	scope._mb = _mb;
 
-})($ || jQuery, window); // modalBasic	
+})($ || jQuery, this); // modalBasic	
 
 /**
 * Expose as an AMD

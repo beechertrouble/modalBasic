@@ -1,41 +1,39 @@
-@-moz-keyframes mb_spin {
-  0% {
-    -moz-transform: rotate(0deg);
-  }
-  100% {
-    -moz-transform: rotate(360deg);
-  }
+._mb_style-content {
+  width: 80%;
+  max-width: 600px;
+  margin: 6.5em auto 3em;
+  background: #ffffff;
+  padding: 0;
+  line-height: 1.4;
+  box-shadow: 0 0 0.5em rgba(0, 0, 0, 0.5);
+  /* reset this because the centering above it relies on centered alignment ... consider basing this on dir attr */
+  text-align: left;
 }
-@-webkit-keyframes mb_spin {
-  0% {
-    -webkit-transform: rotate(0deg);
-  }
-  100% {
-    -webkit-transform: rotate(360deg);
-  }
+._mb_style-header {
+  padding: 12px 10px 10px;
+  font-size: 1.5em;
+  line-height: 1.1;
+  background: #e6e6e6;
 }
-@-o-keyframes mb_spin {
-  0% {
-    -o-transform: rotate(0deg);
-  }
-  100% {
-    -o-transform: rotate(360deg);
-  }
+._mb_style-header:focus {
+  outline: 0px;
 }
-@-ms-keyframes mb_spin {
-  0% {
-    -ms-transform: rotate(0deg);
-  }
-  100% {
-    -ms-transform: rotate(360deg);
-  }
+._mb_style-body {
+  padding: 10px;
 }
-@keyframes mb_spin {
+._mb_style-body:focus {
+  outline: 0px;
+}
+._mb_style-footer {
+  padding: 10px;
+  background: #e6e6e6;
+}
+@keyframes _mb_loading {
   0% {
-    transform: rotate(0deg);
+    transform: scale(1);
   }
   100% {
-    transform: rotate(360deg);
+    transform: scale(1.2);
   }
 }
 #_mb_uber {
@@ -45,10 +43,6 @@
   font-size: inherit;
   font: inherit;
   vertical-align: baseline;
-  -moz-box-sizing: content-box;
-  -webkit-box-sizing: content-box;
-  -o-box-sizing: content-box;
-  -ms-box-sizing: content-box;
   box-sizing: content-box;
   position: fixed;
   top: 0px;
@@ -60,7 +54,7 @@
   opacity: 0;
   transform: translate3d(0, 0, 0);
   transition: opacity 0.2s linear 0s, bottom 0s 0.2s;
-  z-index: 1000;
+  z-index: 5000;
 }
 #_mb_uber #_mb_fixed_wrap {
   margin: 0;
@@ -69,10 +63,6 @@
   font-size: inherit;
   font: inherit;
   vertical-align: baseline;
-  -moz-box-sizing: content-box;
-  -webkit-box-sizing: content-box;
-  -o-box-sizing: content-box;
-  -ms-box-sizing: content-box;
   box-sizing: content-box;
   position: fixed;
   top: 0px;
@@ -97,10 +87,6 @@
   font-size: inherit;
   font: inherit;
   vertical-align: baseline;
-  -moz-box-sizing: content-box;
-  -webkit-box-sizing: content-box;
-  -o-box-sizing: content-box;
-  -ms-box-sizing: content-box;
   box-sizing: content-box;
   position: relative;
   display: block;
@@ -109,7 +95,7 @@
   text-align: center;
 }
 #_mb_uber #_mb_rel_wrap:before {
-  content: '';
+  content: " ";
   display: inline-block;
   height: 70%;
   vertical-align: middle;
@@ -122,93 +108,31 @@
 }
 #_mb_uber #_mb_content_wrap {
   margin: 0;
-  padding: 0;
   border: 0;
   font-size: inherit;
   font: inherit;
   vertical-align: baseline;
-  -moz-box-sizing: content-box;
-  -webkit-box-sizing: content-box;
-  -o-box-sizing: content-box;
-  -ms-box-sizing: content-box;
   box-sizing: content-box;
-  -moz-box-sizing: border-box;
-  -webkit-box-sizing: border-box;
-  -o-box-sizing: border-box;
-  -ms-box-sizing: border-box;
-  box-sizing: border-box;
-  position: relative;
   width: 80%;
   max-width: 600px;
   margin: 6.5em auto 3em;
+  background: #ffffff;
+  padding: 0;
   line-height: 1.4;
   box-shadow: 0 0 0.5em rgba(0, 0, 0, 0.5);
+  /* reset this because the centering above it relies on centered alignment ... consider basing this on dir attr */
+  text-align: left;
+  box-sizing: border-box;
+  position: relative;
   display: inline-block;
   vertical-align: middle;
-  text-align: left;
   transform: scale(0.5);
   transition: all 0.3s 0.2s;
-  background: #ffffff;
-  border: 1px solid rgba(255, 255, 255, 0.9);
-  padding: 30px;
 }
 @media only screen and (max-width: 560px) {
   #_mb_uber #_mb_content_wrap {
     width: 100%;
     margin-bottom: 50px;
-    padding: 15px;
-  }
-}
-#_mb_uber ._mb_close {
-  margin: 0;
-  padding: 0;
-  border: 0;
-  font-size: inherit;
-  font: inherit;
-  vertical-align: baseline;
-  -moz-box-sizing: content-box;
-  -webkit-box-sizing: content-box;
-  -o-box-sizing: content-box;
-  -ms-box-sizing: content-box;
-  box-sizing: content-box;
-  opacity: 0.75;
-  border-radius: 0;
-  border: 1px solid rgba(255, 255, 255, 0.9);
-  background: #ffffff;
-  cursor: pointer;
-  line-height: 1;
-  padding: 10px;
-  margin: 0 0 10px;
-  min-height: 0px;
-  transition: opacity 0.3s;
-}
-#_mb_uber ._mb_close._mb_internal_close {
-  position: absolute;
-  right: 0px;
-  bottom: 100%;
-}
-#_mb_uber ._mb_close._mb_external_close {
-  display: none;
-  position: fixed;
-  right: 5px;
-  top: 10px;
-  opacity: 0.95;
-}
-#_mb_uber ._mb_close span {
-  display: inline-block;
-  vertical-align: middle;
-}
-#_mb_uber ._mb_close:focus,
-#_mb_uber ._mb_close:hover {
-  opacity: 1;
-  border: 1px solid rgba(255, 255, 255, 0.9);
-}
-@media only screen and (max-width: 560px) {
-  #_mb_uber ._mb_close._mb_internal_close {
-    visibility: hidden;
-  }
-  #_mb_uber ._mb_close._mb_external_close {
-    display: block;
   }
 }
 #_mb_uber #_mb_header {
@@ -218,14 +142,14 @@
   font-size: inherit;
   font: inherit;
   vertical-align: baseline;
-  -moz-box-sizing: content-box;
-  -webkit-box-sizing: content-box;
-  -o-box-sizing: content-box;
-  -ms-box-sizing: content-box;
   box-sizing: content-box;
-  text-transform: uppercase;
-  font-size: 30px;
-  line-height: 1;
+  padding: 12px 10px 10px;
+  font-size: 1.5em;
+  line-height: 1.1;
+  background: #e6e6e6;
+}
+#_mb_uber #_mb_header:focus {
+  outline: 0px;
 }
 #_mb_uber #_mb_body {
   margin: 0;
@@ -234,12 +158,8 @@
   font-size: inherit;
   font: inherit;
   vertical-align: baseline;
-  -moz-box-sizing: content-box;
-  -webkit-box-sizing: content-box;
-  -o-box-sizing: content-box;
-  -ms-box-sizing: content-box;
   box-sizing: content-box;
-  padding: 10px 0;
+  padding: 10px;
 }
 #_mb_uber #_mb_body:focus {
   outline: 0px;
@@ -251,16 +171,9 @@
   font-size: inherit;
   font: inherit;
   vertical-align: baseline;
-  -moz-box-sizing: content-box;
-  -webkit-box-sizing: content-box;
-  -o-box-sizing: content-box;
-  -ms-box-sizing: content-box;
   box-sizing: content-box;
-  margin-top: 1em;
-  padding: 1em 0 0;
-  background: transparent;
-  border-top: 1px solid rgba(255, 255, 255, 0.9);
-  font-size: 0.9em;
+  padding: 10px;
+  background: #e6e6e6;
 }
 #_mb_uber #_mb_confirm_wrap {
   text-align: right;
@@ -284,11 +197,7 @@
   width: 100%;
   height: 0%;
   opacity: 0;
-  display: -webkit-box;
-  display: -moz-box;
-  display: -ms-flexbox;
-  display: -webkit-flex;
-  display: flex;
+  flex: 1 auto;
   flex-wrap: wrap;
   align-content: center;
   align-items: center;
@@ -296,19 +205,61 @@
   background: rgba(0, 0, 0, 0.9);
   text-align: center;
   overflow: hidden;
-  z-index: 1000;
-  transition: all 0.3s;
+  z-index: 5000;
+  transition: all 0.2s;
 }
 #_mb_uber ._mb_closeconfirm_wrap ._mb_closeconfirm_inner {
   display: none;
-  -webkit-box-flex: 1 auto;
-  -moz-box-flex: 1 auto;
-  -webkit-flex: 1 auto;
-  -ms-flex: 1 auto;
   flex: 1 auto;
 }
 #_mb_uber ._mb_closeconfirm_wrap button {
   margin: 0.5em;
+}
+#_mb_uber ._mb_close {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: inherit;
+  font: inherit;
+  vertical-align: baseline;
+  box-sizing: content-box;
+  padding: 10px;
+  margin: 0 0 10px;
+  border-radius: 0;
+  background: #ffffff;
+  box-shadow: 0 0 0.5em rgba(0, 0, 0, 0.5);
+  cursor: pointer;
+  line-height: 1;
+  opacity: 0.95;
+  transition: opacity 0.2s;
+}
+#_mb_uber ._mb_close span {
+  display: inline-block;
+  vertical-align: middle;
+}
+#_mb_uber ._mb_close:focus,
+#_mb_uber ._mb_close:hover {
+  opacity: 1;
+}
+#_mb_uber ._mb_close._mb_internal_close {
+  position: absolute;
+  right: 0px;
+  bottom: 100%;
+}
+#_mb_uber ._mb_close._mb_external_close {
+  display: none;
+  position: fixed;
+  right: 5px;
+  top: 10px;
+  opacity: 0.95;
+}
+@media only screen and (max-width: 560px) {
+  #_mb_uber ._mb_close._mb_internal_close {
+    display: none;
+  }
+  #_mb_uber ._mb_close._mb_external_close {
+    display: block;
+  }
 }
 #_mb_uber._mb_closeconfirm ._mb_closeconfirm_wrap {
   top: 0%;
@@ -318,56 +269,16 @@
 #_mb_uber._mb_closeconfirm ._mb_closeconfirm_wrap ._mb_closeconfirm_inner {
   display: block;
 }
-#_mb_uber._mb_loading #_mb_body:before {
-  content: " ";
-  font-size: 1.5em;
-  width: 1em;
-  height: 1em;
-  line-height: 1;
-  text-align: center;
-  margin: 0;
-  display: inline-block;
-  position: relative;
-  vertical-align: middle;
-  -moz-transform-origin: 55% 63%;
-  -webkit-transform-origin: 55% 63%;
-  -o-transform-origin: 55% 63%;
-  -ms-transform-origin: 55% 63%;
-  transform-origin: 55% 63%;
-  -moz-animation: mb_spin 1s 0s linear infinite;
-  -webkit-animation: mb_spin 1s 0s linear infinite;
-  -o-animation: mb_spin 1s 0s linear infinite;
-  -ms-animation: mb_spin 1s 0s linear infinite;
-  animation: mb_spin 1s 0s linear infinite;
-}
-#_mb_uber._mb_loading #_mb_body:after {
-  content: "loading";
-  display: inline-block;
-  position: relative;
-  vertical-align: middle;
-  padding-left: 0.75em;
-}
-#_mb_uber ._mb_hide_me {
-  display: none;
-}
 #_mb_uber._mb_show_me {
   opacity: 1;
   bottom: 0px;
-  transition: opacity 0.2s linear 0.2s, bottom 0s 0s;
+  transition: opacity 0s linear 0.2s, bottom 0.2s 0s;
 }
 #_mb_uber._mb_show_me #_mb_fixed_wrap {
   bottom: 0px;
 }
 #_mb_uber._mb_show_me #_mb_content_wrap {
   transform: scale(1);
-}
-#_mb_uber.modal_large #_mb_content_wrap {
-  max-width: 940px;
-}
-@media only screen and (max-width: 560px) {
-  #_mb_uber.modal_large #_mb_content_wrap {
-    width: 100%;
-  }
 }
 #_mb_uber.hide_narp #_mb_confirm_narp {
   display: none;
