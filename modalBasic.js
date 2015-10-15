@@ -285,19 +285,21 @@
 	}; // buildConfirm()
 	focusOn = function(which) {
 		
+		var activeEl = document.activeElement !== undefined && document.activeElement !== null ? document.activeElement : undefined;
+		
 		switch(which) {
 
 			case('closeconfirm'):
-				if(document.activeElement !== undefined) {
-					lastFocusInner = document.activeElement;
+				if(activeEl !== undefined) {
+					lastFocusInner = activeEl;
 					lastFocusInner.blur();
 				}
 				$wrap.find('._mb_closeconfirm_inner').focus();
 				break;
 			
 			default:
-				if(document.activeElement !== undefined && $(document.activeElement).parents('#_mb_uber').length <= 0) {
-					lastFocus = document.activeElement;
+				if(activeEl !== undefined && $(activeEl).parents('#_mb_uber').length <= 0) {
+					lastFocus = activeEl;
 					lastFocus.blur();
 				}
 				if($header.text().length > 0) {
